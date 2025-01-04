@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="CSharpToTSConverterWindow.View.PropertyControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CSharpToTSConverterWindow.View" 
+             xmlns:viewmodel="clr-namespace:CSharpToTSConverterWindow.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:PropertyControlViewModel}"
+             mc:Ignorable="d" 
+             HorizontalContentAlignment="Stretch"
+             Width="auto">
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox HorizontalAlignment="Stretch" Grid.Column="0" Text="{Binding Path=Name}"/>
+        <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Text="{Binding Path=Type}"/>
+        <StackPanel Grid.Column="2">
+            <CheckBox IsChecked="{Binding Path=IsNullable}" Content="Nullable"/>
+            <Button Command="{Binding Path=OnDelete}">Delete</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

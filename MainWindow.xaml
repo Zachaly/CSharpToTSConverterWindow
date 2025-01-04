@@ -4,9 +4,58 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSharpToTSConverterWindow"
+        xmlns:view="clr-namespace:CSharpToTSConverterWindow.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:viewModel="clr-namespace:CSharpToTSConverterWindow.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewModel:MainWindowViewModel}"
+        Title="MainWindow" Height="800" Width="1600">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <Button DockPanel.Dock="Top" Command="{Binding Path=SelectFileCommand}">Select file</Button>
+            <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding Path=TypeContent}"/>
+        </DockPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1">
+            <Button Command="{Binding SelectPropertiesCommand}">Select properties</Button>
+            <TextBlock Text="{Binding Path=TypeName}"/>
+            <TextBlock Text="{Binding Path=Parents}"/>
+            <ListView ItemsSource="{Binding Path=CSharpProperties}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="viewModel:PropertyControlViewModel">
+                        <view:PropertyControl DataContext="{Binding Path=.}"></view:PropertyControl>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Vertical">
+            <Button Command="{Binding Path=GenerateTSPropertiesCommand}">Generate TS props</Button>
+            <ListView ItemsSource="{Binding Path=TsProperties}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="viewModel:PropertyControlViewModel">
+                        <view:PropertyControl DataContext="{Binding Path=.}"></view:PropertyControl>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <DockPanel Grid.Column="3">
+            <Button DockPanel.Dock="Top" Command="{Binding Path=GenerateTypescriptCommand}">Generate typescript</Button>
+            <TextBox Text="{Binding Path=GeneratedTypescript}"/>
+        </DockPanel>
     </Grid>
+    
 </Window>
